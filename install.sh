@@ -5,8 +5,8 @@ set -e
 FINDLINKS='http://eggrepo.eea.europa.eu/simple'
 INDEX='http://pypi.python.org/simple'
 
-SETUPTOOLS=`curl -s https://raw.github.com/eea/eea.plonebuildout.core/master/versions.cfg | grep "setuptools\s*\=\s*" | sed 's/ *$//g' | sed 's/=$//g' | sed 's/\s*=\s*/==/g'`
-ZCBUILDOUT=`curl -s https://raw.github.com/eea/eea.plonebuildout.core/master/versions.cfg | grep "zc\.buildout\s*=\s*" | sed 's/\s*=\s*/==/g'`
+SETUPTOOLS=`curl -s https://raw.github.com/eea/eea.plonebuildout.core/master/buildout-configs/versions.cfg | grep "setuptools\s*\=\s*" | sed 's/ *$//g' | sed 's/=$//g' | sed 's/\s*=\s*/==/g'`
+ZCBUILDOUT=`curl -s https://raw.github.com/eea/eea.plonebuildout.core/master/buildout-configs/versions.cfg | grep "zc\.buildout\s*=\s*" | sed 's/\s*=\s*/==/g'`
 
 if [ -z "$SETUPTOOLS" ]; then
   SETUPTOOLS="setuptools"
