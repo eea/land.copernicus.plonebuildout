@@ -58,6 +58,7 @@ libz-dev           which                buildout
 libssl-dev         openssl-devel        buildout
 --                 patch                buildout
 --                 gcc-c++              buildout
+ImageMagick        ImageMagick          Wand 
 =================  ===================  =============================
 
 Additional info to install git for CentOS::
