@@ -50,7 +50,7 @@ libsvn-dev         subversion-devel     buildout
 libaprutil1-dev    apr-util-devel       buildout
 wv                 wv                   http://wvware.sourceforge.net
 poppler-utils      poppler-utils        pdftotext
-libjpeg-dev        libjpeg-devel        Pillow
+libjpeg-dev        libjpeg-turbo-devel  Pillow
 libsasl2-dev       cyrus-sasl-devel     OpenLDAP
 readline-dev       readline-devel       buildout
 build-essential    make                 buildout
