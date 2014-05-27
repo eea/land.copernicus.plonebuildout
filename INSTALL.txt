@@ -13,9 +13,10 @@ Everything is installed in a local folder. This prevents conflicts with
 already existing python and zope packages. Nothing other than this folder
 is touched, so the user doesn't need any special priviliges.
 
-There are two configurations available for running this buildout:
+There are three configurations available for running this buildout:
  1. one for developers (development)
  2. one for production (deployment)
+ 3. one for demonstration (staging)
 
 System requirements and preparation
 ===============================================
@@ -57,6 +58,7 @@ libz-dev           which                buildout
 libssl-dev         openssl-devel        buildout
 --                 patch                buildout
 --                 gcc-c++              buildout
+ImageMagick        ImageMagick          Wand 
 =================  ===================  =============================
 
 Additional info to install git for CentOS::
@@ -64,6 +66,8 @@ Additional info to install git for CentOS::
 $ wget http://puias.math.ias.edu/data/puias/computational/6/x86_64/git-1.8.3.1-1.sdl6.x86_64.rpm
 $ wget http://puias.math.ias.edu/data/puias/computational/6/i386/perl-Git-1.8.3.1-1.sdl6.noarch.rpm
 $ yum update  git-1.8.3.1-1.sdl6.x86_64.rpm perl-Git-1.8.3.1-1.sdl6.noarch.rpm
+
+
 
 Run buildout for development
 ----------------------------
@@ -154,6 +158,89 @@ administrators, e.g.::
 
 $ ln -s /var/local/land.copernicus.plonebuildout/etc/apache-vh.conf /etc/httpd/conf.d/land-copernicus-apache-vh.conf
 
+Run buildout for staging 
+----------------------------
+Some preliminary preparations must be done by system administrators on the staging server:
+
+* a user and user group called 'zope' should be created having neccesary rights
+* the project folder must be created under /var/local/land.copernicus.plonebuildout with group owner zope and 2775 (rwxrwxr-x) mode
+* add under /etc/profile:
+
+::
+
+ if [ "`id -gn`" = "zope" ]; then
+     umask 002
+ fi
+
+The first time you want to use the copernicus plonebuildout you have to run a
+few commands (as user zope)::
+The first time you want to use this buildout you first have to get
+all software from subversion and then run a few commands::
+
+   $ git clone git@github.com:eea/land.copernicus.plonebuildout.git staging
+   $ cd staging
+   $ ./install.sh
+   $ ./bin/buildout -c staging.cfg
+
+This first three steps only have to be done the first time you use this
+buildout. When you later want to update the site because people have committed
+changes you do::
+
+   $ cd staging
+   $ git pull -u
+   $ ./bin/develop rb
+
+The above installation process will install and configure, in addition to
+Zope and ZEO, the following:
+
+* *Apache* basic configuration
+* *Pound* for load balancing ZEO clients
+* *Memcache*
+* Daemon for sending *emails*
+* *ZEO clients* - 2 instances
+* *ZEO server*
+* *Supervisor* for monitor and control the processes: seo, pound, memcached,
+  www1, www2 
+
+To start processess on staging::
+
+   $ ./bin/supervisord
+
+If the supervisord is already started you will receive this error::
+
+   $ .bin/supervisord
+   Error: Another program is already listening on a port that one of our HTTP
+   servers is configured to use.  Shut this program down first before starting
+   supervisord.
+   For help, use bin/supervisord -h
+
+To start all instance::
+
+   $ ./bin/supervisorctl start all
+
+This command will start seo, pound, memcached, www1, www2.
+ 
+To restart all instance::
+
+   $ ./bin/supervisorctrl restart all
+
+To stop all instance::
+
+   $ ./bin/supervisorctrl stop all
+
+To see the status for all instance::
+
+   $ ./bin/supervisorctl status
+
+To stop only one instance e.g. www1::
+
+   $ ./bin/supervisorctl restart www1
+
+To stop supervisor daemon::
+
+   $ ./bin/supervisorctl shutdown
+
+
 User permissions
 ~~~~~~~~~~~~~~~~
 On production server, system administrators should setup:
@@ -168,6 +255,19 @@ Packing is a vital regular maintenance procedure The Plone database does not aut
 Data.fs should be packed daily via a cron job::
 
  01 2 * * * /var/local/land.copernicus.plonebuildout/bin/zeopack
+
+Synchronisation database
+~~~~~~~~~~~~~~~~~~~~~~~~
+The synchronisation is done by the sync-data.sh via cron job, which is set for
+zope user::
+
+ 0 03 * * Sun /var/local/staging/sync-data.sh >> /var/local/staging/sync-data.log
+
+To edit the cron job for the zope user::
+
+    $ crontab -e
+
+The synchronisation script makes logs in sync-data.log.
 
 Portal Property for Google Maps Api Key
 ---------------------------------------
