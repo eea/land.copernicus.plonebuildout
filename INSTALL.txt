@@ -258,9 +258,14 @@ Data.fs should be packed daily via a cron job::
 
 Synchronisation database
 ~~~~~~~~~~~~~~~~~~~~~~~~
-The synchronisation is done by the sync-data.sh via cron job::
+The synchronisation is done by the sync-data.sh via cron job, which is set for
+zope user::
 
  0 03 * * Sun /var/local/staging/sync-data.sh >> /var/local/staging/sync-data.log
+
+To edit the cron job for the zope user::
+
+    $ crontab -e
 
 The synchronisation script makes logs in sync-data.log.
 
