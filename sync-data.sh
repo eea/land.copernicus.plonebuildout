@@ -1,6 +1,6 @@
 #-----------------GLOBAL VARIABLES 
-PRODUCTION_DIR=""
-STAGING_DIR=""
+PRODUCTION_DIR="/var/local/copernicus/land.copernicus.plonebuildout"
+STAGING_DIR="/var/local/copernicus/staging/land.copernicus.plonebuildout"
 #----------------------------
 
 #----------------GENERAL FUNCTIONS
