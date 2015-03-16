@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LASTCFG
+LASTCFG=''
 
 if [ -s ".mr.developer.cfg" ]; then
     LASTCFG=`sed -n "/\[buildout\]/ {N; /\.*args\ =/ {N; /\n.*-c/ {n; p;}}}" .mr.developer.cfg | sed -e 's/^[ \t]*//' | sed "s/'//g"`
