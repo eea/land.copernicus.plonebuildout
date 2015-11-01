@@ -6,4 +6,11 @@ eggs/
 include/
 lib/
 local/
-
+.current_revision
+.installed.cfg
+.mr.developer.cfg
+_eggmonkey.cache
+parts/
+src/
+updates.sh
+var/
