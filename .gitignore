@@ -13,4 +13,5 @@ _eggmonkey.cache
 parts/
 src/
 updates.sh
+updates.sh.tmp
 var/
