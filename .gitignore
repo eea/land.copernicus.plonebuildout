@@ -15,3 +15,13 @@ src/
 updates.sh
 updates.sh.tmp
 var/
+activate_scl
+buildout-configs/templates/apache.tpl
+buildout-configs/templates/zopesendmail.tpl
+etc/apache-vh.conf
+etc/rc.d/
+lib64
+setuptools-0.9.8.tar.gz
+supervisor.conf_bck
+sync-data.log
+sync-data.sh_bck
