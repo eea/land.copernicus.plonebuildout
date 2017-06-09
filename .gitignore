@@ -25,3 +25,5 @@ setuptools-0.9.8.tar.gz
 supervisor.conf_bck
 sync-data.log
 sync-data.sh_bck
+get-pip.py
+pip-selfcheck.json
