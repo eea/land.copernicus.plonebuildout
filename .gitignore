@@ -27,3 +27,4 @@ sync-data.log
 sync-data.sh_bck
 get-pip.py
 pip-selfcheck.json
+_test_setuptools
